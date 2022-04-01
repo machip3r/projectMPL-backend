@@ -11,6 +11,22 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 
 // DB Connection
+const uri =
+  "mongodb+srv://" +
+  process.env.USER +
+  ":" +
+  process.env.PASSWORD +
+  "@cluster0.dfv7t.mongodb.net/" +
+  process.env.DBNAME +
+  "?retryWrites=true&w=majority";
+// const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.dfv7t.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
+// const options = {userNewUrlParser: true, userUnifiedTopology: true};
+
+mongoose
+  /* .connect(uri, options) */
+  .connect(uri)
+  .then(() => console.log("DB Connected!"))
+  .catch((error) => console.log("Error: + " + error));
 
 // Routes import
 const authRoutes = require("./routes/auth.js");
