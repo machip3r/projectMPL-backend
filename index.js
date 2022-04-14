@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
 const app = express();
+
 const authRoutes = require("./routes/auth.js");
+const dashboardRoutes = require("./routes/dashboard.js");
+const tokenValidation = require("./routes/tokenValidation.js");
+
 const port = process.env.port || "3000";
 
 dotenv.config();
@@ -40,6 +44,7 @@ app.get("/", (request, result) =>
 
 // Routes import
 app.use("/api/user", authRoutes);
+app.use("/api/dashboard", tokenValidation, dashboardRoutes);
 
 // Start server
 app.listen(port, () => console.log("Server on http://localhost:" + port + "/"));
