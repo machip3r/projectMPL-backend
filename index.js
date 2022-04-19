@@ -14,7 +14,8 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-const port = process.env.port || "3000";
+/* const port = process.env.port || "3000"; */
+const port = "3000";
 
 dotenv.config();
 
@@ -54,4 +55,12 @@ app.use("/api/user", authRoutes);
 app.use("/api/dashboard", tokenValidation, dashboardRoutes);
 
 // Start server
-app.listen(port, () => console.log("Server on http://localhost:" + port + "/"));
+app.listen(port, () =>
+  console.log(
+    "Server on http://localhost:" +
+      port +
+      "/ and https://projectmpl-backend.herokuapp.com:" +
+      port +
+      "/"
+  )
+);
