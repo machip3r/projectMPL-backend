@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.js");
 const Joi = require("@hapi/joi");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const schemaRegister = Joi.object({
@@ -22,13 +22,13 @@ router.post("/register", async (request, result) => {
       error: "The email exists already",
     });
 
-  const salt = await bcrypt.genSalt(10);
-  const encryptedPassword = await bcrypt.hash(request.body.password, salt);
+  /* const salt = await bcrypt.genSalt(10);
+  const encryptedPassword = await bcrypt.hash(request.body.password, salt); */
 
   const user = new User({
     name: request.body.name,
     email: request.body.email,
-    password: encryptedPassword,
+    password: request.body.password,
   });
 
   try {
@@ -60,12 +60,12 @@ router.post("/login", async (request, result) => {
       error: "The email doesn't exists",
     });
 
-  const correctPassword = await bcrypt.compare(
+  /* const correctPassword = await bcrypt.compare(
     request.body.password,
     userExists.password
-  );
+  ); */
 
-  if (!correctPassword)
+  if (request.body.password != userExists.password)
     return result.status(400).json({
       error: "The password is incorrect",
     });

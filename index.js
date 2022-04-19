@@ -2,11 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const app = express();
 
 const authRoutes = require("./routes/auth.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const tokenValidation = require("./routes/tokenValidation.js");
+
+const corsOptions = {
+  origin: "*",
+  optionSuccessStatus: 200,
+};
 
 const port = process.env.port || "3000";
 
@@ -33,6 +39,7 @@ mongoose
 // Body Parser Config (get the info body of requests)
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
+app.use(cors(corsOptions));
 
 // Middleware route
 app.get("/", (request, result) =>
